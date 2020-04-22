@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  rails:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/usr/src/app
+    env_file:
+      - .env/development/rails
+      - .env/development/database
+
+  redis:
+    image: redis
+
+  db:
+    image: postgres
+    ports:
+      - "5433:5432"
+    env_file:
+      - .env/development/database
