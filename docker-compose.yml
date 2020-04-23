@@ -11,20 +11,22 @@ services:
       - .env/development/rails
       - .env/development/database
     environment:
-      - WEBPACKER_DEV_SERVER_HOST=webpack_dev_server
+      - WEBPACKER_DEV_SERVER_HOST=wds
 
-  webpack_dev_server:
-    build: .                          # <label id="chapter.playing-nice-with-javascript.docker-compose.webpack-dev-server.build" />
-    command: ./bin/webpack-dev-server # <label id="chapter.playing-nice-with-javascript.docker-compose.webpack-dev-server.command" />
-    ports:
-      - 3035:3035                   # <label id="chapter.playing-nice-with-javascript.docker-compose.webpack-dev-server.port" />
+  wds:
+    build: .
+    command: ./bin/webpack-dev-server
     volumes:
-      - .:/usr/src/app              # <label id="chapter.playing-nice-with-javascript.docker-compose.webpack-dev-server.volume" />
-    env_file:                       # <label id="chapter.playing-nice-with-javascript.docker-compose.webpack-dev-server.start_env" />
+      - .:/usr/src/app
+    ports:
+      - '3035:3035'
+    env_file:
       - .env/development/rails
-      - .env/development/database   # <label id="chapter.playing-nice-with-javascript.docker-compose.webpack-dev-server.end_env" />
+      - .env/development/database
     environment:
-      - WEBPACKER_DEV_SERVER_HOST=0.0.0.0 # <label id="chapter.playing-nice-with-javascript.docker-compose.webpack-dev-server.env_all_ips" />
+      - NODE_ENV=development
+      - RAILS_ENV=development
+      - WEBPACKER_DEV_SERVER_HOST=0.0.0.0
 
   redis:
     image: redis
