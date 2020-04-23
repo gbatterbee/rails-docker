@@ -7,11 +7,11 @@ default: &default
   database: <%= ENV['POSTGRES_DB'] %>
 
 development:
-  ​<<​: *default
+  <<: *default
 
 test:
-  ​<<​: *default
+  <<: *default
   database: ​myapp_test​
 
 production:
-  ​<<​: *default
+  <<: *default

@@ -6,6 +6,9 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  # Maintain DB schema
+  config.active_record.maintain_test_schema = true
+
   config.cache_classes = false
 
   # Do not eager load code on boot. This avoids loading your whole application
