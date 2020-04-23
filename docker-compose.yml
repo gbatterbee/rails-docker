@@ -14,17 +14,17 @@ services:
       - WEBPACKER_DEV_SERVER_HOST=webpack_dev_server
 
   webpack_dev_server:
-    build: .
-    command: ./bin/webpack-dev-server
+    build: .                          # <label id="chapter.playing-nice-with-javascript.docker-compose.webpack-dev-server.build" />
+    command: ./bin/webpack-dev-server # <label id="chapter.playing-nice-with-javascript.docker-compose.webpack-dev-server.command" />
     ports:
-      - "3035:3035"
+      - 3035:3035                   # <label id="chapter.playing-nice-with-javascript.docker-compose.webpack-dev-server.port" />
     volumes:
-      - .:/usr/src/app
-    env_file:
+      - .:/usr/src/app              # <label id="chapter.playing-nice-with-javascript.docker-compose.webpack-dev-server.volume" />
+    env_file:                       # <label id="chapter.playing-nice-with-javascript.docker-compose.webpack-dev-server.start_env" />
       - .env/development/rails
-      - .env/development/database
+      - .env/development/database   # <label id="chapter.playing-nice-with-javascript.docker-compose.webpack-dev-server.end_env" />
     environment:
-      - WEBPACKER_DEV_SERVER_HOST=0.0.0.0
+      - WEBPACKER_DEV_SERVER_HOST=0.0.0.0 # <label id="chapter.playing-nice-with-javascript.docker-compose.webpack-dev-server.env_all_ips" />
 
   redis:
     image: redis
