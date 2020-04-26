@@ -5,5 +5,6 @@ class WelcomeController < ApplicationController
     redis = Redis.new(host: 'redis', port: 6379)
     redis.incr 'page hits'
     @page_hits = redis.get 'page hits'
+    HardWorker.perform_async('Welcome', @page_hits)
   end
 end

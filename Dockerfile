@@ -19,6 +19,7 @@ RUN apt-get update -yqq && apt-get install -yqq google-chrome-stable
 ### Install Gems
 COPY Gemfile* /usr/src/app/
 WORKDIR ./usr/src/app
+ENV BUNDLE_PATH /gems
 RUN bundle install
 
 # Copy working files
