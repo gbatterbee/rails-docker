@@ -1,10 +1,12 @@
 version: '3'
 
 services:
+  # Runs the Rails app
   web:
     build: .
     ports:
-      - "3000:3000"
+      - "3000:3000" # for development
+      - "4000:4000" # for capybara server
     volumes:
       - .:/usr/src/app
       - gem_cache:/gems
@@ -14,18 +16,9 @@ services:
       - .env/development/redis
     environment:
       - WEBPACKER_DEV_SERVER_HOST=wds
+      - SELENIUM_REMOTE_HOST=selenium_chrome
 
-  workers:
-    build: .
-    command: bundle exec sidekiq
-    volumes:
-      - .:/usr/src/app
-      - gem_cache:/gems
-    env_file:
-      - .env/development/rails
-      - .env/development/database
-      - .env/development/redis
-
+  # Runs webpack dev server gem for the React code (new with Rails 5?)
   wds:
     build: .
     command: ./bin/webpack-dev-server
@@ -42,9 +35,23 @@ services:
       - RAILS_ENV=development
       - WEBPACKER_DEV_SERVER_HOST=0.0.0.0
 
+  # Worker jobs
+  workers:
+    build: . # Rebuilds the rails container image (if we build the container outside compose - we wouldn't need to rebuild)
+    command: bundle exec sidekiq
+    volumes:
+      - .:/usr/src/app
+      - gem_cache:/gems
+    env_file:
+      - .env/development/rails
+      - .env/development/database
+      - .env/development/redis
+
+  # Redis, used by sidekiq and directly
   redis:
     image: redis
 
+  # Postgres DB
   db:
     image: postgres
     ports:
@@ -53,6 +60,12 @@ services:
       - .env/development/database
     volumes:
       - db_data:/var/lib/postgresql/data
+
+  # Selenium/Chrome for Rspec Tests
+  selenium_chrome:
+    image: selenium/standalone-chrome-debug
+    ports:
+      - "5900:5900"
 
 volumes:
   db_data:

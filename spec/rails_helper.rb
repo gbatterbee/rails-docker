@@ -2,8 +2,8 @@
 ENV['RAILS_ENV'] ||= 'test'
 
 require File.expand_path('../config/environment', __dir__)
-
 require 'rspec/rails'
+require_relative './support/capybara.rb'
 
 # Prevent database truncation if the environment is production
 abort('The Rails environment is running in production mode!') if Rails.env.production?
@@ -48,17 +48,24 @@ end
 #   Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
 # end
 
-Capybara.javascript_driver = :chrome_headless
-
 # Setup rspec
 RSpec.configure do |config|
   config.before(:each, type: :system) do
-    driven_by :rack_test
+    driven_by :chrome
+    Capybara.server_host = "0.0.0.0"
+    Capybara.server_port = 4000
+    Capybara.app_host = "http://web:4000"
   end
 
-  config.before(:each, type: :system, js: true) do
-    driven_by :chrome_headless
+  config.after(:each) do
+    Capybara.reset_sessions!
+    Capybara.use_default_driver
+    Capybara.app_host = nil
   end
+
+  # config.before(:each, type: :system, js: true) do
+  #   driven_by :chrome_headless
+  # end
 end
 
 RSpec.configure do |config|
