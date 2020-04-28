@@ -9,6 +9,9 @@ Get a cup of tea.
 To view logs when running with -d
 docker-compose logs -f [name of service]
 
+# Stopping and cleaning up
+* docker-compose down
+
 # Running tests
 * docker-compose exec web bundle exec rspec
 
