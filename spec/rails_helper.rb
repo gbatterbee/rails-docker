@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV['RAILS_ENV'] ||= 'test'
 
@@ -33,28 +35,13 @@ rescue ActiveRecord::PendingMigrationError => e
   exit 1
 end
 
-
-
-# Capybara.server = :puma, { Silent: true }
-
-# Capybara.register_driver :chrome_headless do |app|
-#   options = ::Selenium::WebDriver::Chrome::Options.new
-
-#   options.add_argument('--headless')
-#   options.add_argument('--no-sandbox')
-#   options.add_argument('--disable-dev-shm-usage')
-#   options.add_argument('--window-size=1400,1400')
-
-#   Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
-# end
-
 # Setup rspec
 RSpec.configure do |config|
   config.before(:each, type: :system) do
-    driven_by :chrome
-    Capybara.server_host = "0.0.0.0"
+    driven_by :chrome #:chrome_headless
+    Capybara.server_host = '0.0.0.0'
     Capybara.server_port = 4000
-    Capybara.app_host = "http://web:4000"
+    Capybara.app_host = 'http://web:4000'
   end
 
   config.after(:each) do
@@ -62,10 +49,6 @@ RSpec.configure do |config|
     Capybara.use_default_driver
     Capybara.app_host = nil
   end
-
-  # config.before(:each, type: :system, js: true) do
-  #   driven_by :chrome_headless
-  # end
 end
 
 RSpec.configure do |config|
