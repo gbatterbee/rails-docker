@@ -15,15 +15,14 @@ services:
 * Install docker
 * Clone this repo
 * docker-compose up -d (omit the -d [detached] if you want to see the logs)
+* docker-compose​​ ​​run​​ ​​exec ​​web​​ ​​bin/rails​​ ​​db:create
+* docker-compose exec web bin/rails db:migrate
 
 Things will build, bundles installed.
 Get a cup of tea.
 
 To view logs when running with -d
 docker-compose logs -f [name of service]
-
-# Migrations
-* docker-compose exec web bin/rails db:migrate
 
 # Stopping and cleaning up
 * docker-compose down
