@@ -9,7 +9,7 @@ services:
 * workers - Builds the image, described in Dockerfile and runs sidekiq workers
 * redis - used by web and workers
 * db - postgres database
-* selenium_chrome - runs a chrome for rspec
+* selenium_chrome - runs chrome for rspec
 
 # Running Services
 * Install docker
